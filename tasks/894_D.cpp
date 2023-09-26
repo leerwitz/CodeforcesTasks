@@ -24,8 +24,9 @@ int main() {
 unsigned long long min(unsigned long long kinds) {
 
   unsigned long long res = (1 + sqrt(1 + 8 * kinds)) / 2;
-  if (res * res - res < 2 * kinds)
-    ++res;
+  if (res * res - res > 2 * kinds)
+    --res;
+  res += kinds - (res * res - res)/2;
 
   return res;
 }
