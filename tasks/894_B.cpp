@@ -2,22 +2,9 @@
 #include <vector>
 
 std::vector<int> input(long unsigned int size);
-void original_cons(long unsigned int n);
+std::vector<int> possible_sequence(long unsigned int size_sequence);
 
-int main() {
 
-  long unsigned int t, n;
-
-  std::cin >> t;
-  for (long unsigned int i = 0; i < t; ++i) {
-    std::cin >> n;
-    original_cons(n);
-    if (i != t - 1)
-      std::cout << "\n";
-  }
-
-  return 0;
-}
 std::vector<int> input(long unsigned int size) {
   std::vector<int> res(size);
   for (long unsigned int i = 0; i < size; ++i) {
@@ -27,14 +14,14 @@ std::vector<int> input(long unsigned int size) {
   return res;
 }
 
-void original_cons(long unsigned int n) {
+std::vector<int> possible_sequence (long unsigned int size_sequence) {
 
-  std::vector<int> b = input(n);
-  std::vector<int> res(2 * n);
+  std::vector<int> b = input(size_sequence);
+  std::vector<int> res(2 * size_sequence);
 
   res[0] = b[0];
   long unsigned int k = 0;
-  for (long unsigned int i = 1; i < n; i++) {
+  for (long unsigned int i = 1; i < size_sequence; i++) {
     if (b[i] >= b[i - 1])
       res[i + k] = b[i];
     else {
@@ -43,9 +30,28 @@ void original_cons(long unsigned int n) {
       res[i + k] = b[i];
     }
   }
-  std::cout << n + k << "\n";
+  res.resize(size_sequence + k);
 
-  for (long unsigned int i = 0; i < n + k; i++) {
-    std::cout << res[i] << " ";
+  return res;
+
+}
+
+int main() {
+
+  long unsigned int number_of_inputs, n;
+  std::vector<int> original_sequence;
+  std::cin >> number_of_inputs;
+  for (long unsigned int i = 0; i < number_of_inputs; ++i) {
+    
+    std::cin >> n;
+    original_sequence = possible_sequence(n);
+    std::cout << original_sequence.size() << "\n";
+    for (long unsigned int j = 0; j < original_sequence.size(); j++) {
+      std::cout << original_sequence[j] << " ";
+    }
+    if (i != number_of_inputs - 1)
+      std::cout << "\n";
   }
+
+  return 0;
 }
