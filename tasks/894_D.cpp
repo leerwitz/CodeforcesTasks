@@ -7,11 +7,11 @@ unsigned long long min_number_of_kinds(unsigned long long kinds_needed);
 unsigned long long min_number_of_kinds(unsigned long long kinds_needed) {
 
   unsigned long long res = (1 + sqrt(1 + 8 * kinds_needed)) / 2;
-  if ((res * res - res) /2 > kinds_needed)
+  if ((res * res - res) / 2 > kinds_needed)
     --res;
-  if(kinds_needed - (res * res - res)/2 >= res )
-  ++res;
-  res += kinds_needed - (res * res - res)/2;
+  if (kinds_needed - (res * res - res) / 2 >= res)
+    ++res;
+  res += kinds_needed - (res * res - res) / 2;
 
   return res;
 }
@@ -32,4 +32,3 @@ int main() {
 
   return 0;
 }
-

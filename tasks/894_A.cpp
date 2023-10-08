@@ -1,10 +1,12 @@
 #include <iostream>
 #include <vector>
 
-std::vector<std::vector<char>> rug(long unsigned int length, long unsigned int width);
+std::vector<std::vector<char>> rug(long unsigned int length,
+                                   long unsigned int width);
 bool is_liked_rug(long unsigned int length, long unsigned int width);
 
-std::vector<std::vector<char>> rug(long unsigned int length, long unsigned int width) {
+std::vector<std::vector<char>> rug(long unsigned int length,
+                                   long unsigned int width) {
 
   std::vector<std::vector<char>> res(length);
   for (long unsigned int i = 0; i < length; i++) {
@@ -19,12 +21,11 @@ std::vector<std::vector<char>> rug(long unsigned int length, long unsigned int w
   return res;
 }
 
-
 bool is_liked_rug(long unsigned int length, long unsigned int width) {
   std::vector<std::vector<char>> arr = rug(length, width);
   std::vector<char> name = {'v', 'i', 'k', 'a'};
   long unsigned int cur = 0;
-  bool res; 
+  bool res;
 
   for (long unsigned int j = 0; j < width; ++j) {
     for (long unsigned int i = 0; i < length; ++i) {
@@ -38,7 +39,7 @@ bool is_liked_rug(long unsigned int length, long unsigned int width) {
     }
   }
   if (cur == 4)
-  res = true;
+    res = true;
   else
     res = false;
   return res;
@@ -51,9 +52,9 @@ int main() {
   std::cin >> number_of_inputs;
   for (long unsigned int i = 0; i < number_of_inputs; ++i) {
     std::cin >> length >> width;
-    if(is_liked_rug(length, width))
+    if (is_liked_rug(length, width))
       std::cout << "yes";
-    else 
+    else
       std::cout << "no";
     if (i != number_of_inputs - 1)
       std::cout << '\n';
@@ -61,4 +62,3 @@ int main() {
 
   return 0;
 }
-

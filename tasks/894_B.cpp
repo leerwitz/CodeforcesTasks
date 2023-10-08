@@ -4,7 +4,6 @@
 std::vector<int> input(long unsigned int size);
 std::vector<int> possible_sequence(long unsigned int size_sequence);
 
-
 std::vector<int> input(long unsigned int size) {
   std::vector<int> res(size);
   for (long unsigned int i = 0; i < size; ++i) {
@@ -14,7 +13,7 @@ std::vector<int> input(long unsigned int size) {
   return res;
 }
 
-std::vector<int> possible_sequence (long unsigned int size_sequence) {
+std::vector<int> possible_sequence(long unsigned int size_sequence) {
 
   std::vector<int> b = input(size_sequence);
   std::vector<int> res(2 * size_sequence);
@@ -33,7 +32,6 @@ std::vector<int> possible_sequence (long unsigned int size_sequence) {
   res.resize(size_sequence + k);
 
   return res;
-
 }
 
 int main() {
@@ -42,7 +40,7 @@ int main() {
   std::vector<int> original_sequence;
   std::cin >> number_of_inputs;
   for (long unsigned int i = 0; i < number_of_inputs; ++i) {
-    
+
     std::cin >> n;
     original_sequence = possible_sequence(n);
     std::cout << original_sequence.size() << "\n";
