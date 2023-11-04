@@ -1,96 +1,63 @@
-#include <iostream>
 #include <math.h>
+
+#include <iostream>
 #include <vector>
 
-
-int binary_find_degree(int value, int min_degree, int max_degree){
-if( value == 0)
-    return -1;
-int result = (max_degree + min_degree)/2;
-if( (int)(pow(2, result)) > value)
-    result = binary_find_degree(value,min_degree, result);
-else if((int)(pow(2, result + 1)) < value)
-    result = binary_find_degree(value,result,max_degree);
-return result;
-}
-
-
-
-int Bitwise_And(int number_i, int number_j){
-    int max_degree_i, max_degree_j, result = 0;
-    max_degree_i = binary_find_degree(number_i, 0, 30);
-    max_degree_j = binary_find_degree(number_j, 0, 30);
-    while(number_i != 0 || number_j != 0){
-        if(max_degree_i == max_degree_j){
-            result += pow(2, max_degree_i);
-            number_i -= pow(2, max_degree_i);
-            number_j -= pow(2, max_degree_j);
-        } else if(max_degree_i > max_degree_j){
-            number_i -= pow(2, max_degree_i);
-            max_degree_i = binary_find_degree(number_i, 0, 30);
-        } else{
-            number_j -= pow(2, max_degree_j);
-            max_degree_j = binary_find_degree(number_j, 0, 30);
-        }
-    }
+long long int binary_find_degree(long long int value, long long int min_degree, long long int max_degree, std::vector<long long int> &array_degree) {
+    if (value == 0) return -1;
+    long long int result = (max_degree + min_degree) / 2;
+    if (array_degree[result] > value)
+        result = binary_find_degree(value, min_degree, result, array_degree);
+    else if (array_degree[result + 1] <= value)
+        result = binary_find_degree(value, result, max_degree, array_degree);
     return result;
 }
 
-
-int Bitwise_Excluding_Or(int number_i, int number_j){
-    int max_degree_i, max_degree_j, result = 0;
-    max_degree_i = binary_find_degree(number_i, 0, 30);
-    max_degree_j = binary_find_degree(number_j, 0, 30);
-    while(number_i != 0 || number_j != 0){
-        if(max_degree_i == max_degree_j){
-            number_i -= pow(2, max_degree_i);
-            number_j -= pow(2, max_degree_j);
-        } else if(max_degree_i > max_degree_j){
-            result += pow(2, max_degree_i);
-            number_i -= pow(2, max_degree_i);
-            max_degree_i = binary_find_degree(number_i, 0, 30);
-        } else{
-            result += pow(2, max_degree_j);
-            number_j -= pow(2, max_degree_j);
-            max_degree_j = binary_find_degree(number_j, 0, 30);
-        }
+long long int bit_degree(long long int value) {
+    long long int t = 1 << 30, result = 30;
+    while (value < t) {
+        --result;
+        t >>= 1;
     }
+
     return result;
 }
 
-
-int Task_Answer(std::vector<int> &arr){
-int result = 0;
-for (size_t i = 0; i < arr.size() - 1; ++i)
-{
-    for (size_t j = i + 1; j < arr.size(); ++j)
-    {
-        if(Bitwise_And(arr[i], arr[j]) >= Bitwise_Excluding_Or(arr[i], arr[j]))
-            ++result;
-    }
-    
-}
-
-return result;
-}
-
-int main(){
-size_t number_of_inputs, ArraySize;
-std::vector<int> array;
-std::cin >> number_of_inputs;
-for (size_t i = 0; i < number_of_inputs; ++i)
-{
-    std::cin >> ArraySize;
-    array.resize(ArraySize);
-    for (size_t j = 0; j < ArraySize; ++j)
-    {
-        std::cin >> array[j];
+long long int Task_Answer2(std::vector<long long int> &arr, std::vector<long long int> &array_degree) {
+    long long int result = 0, size = 0;
+    std::vector<long long int> arr_max_degree = std::vector<long long int>(34, 0);
+    for (size_t i = 0; i < arr.size(); ++i) {
+        //++arr_max_degree[bit_degree(arr[i])];
+        ++arr_max_degree[binary_find_degree(arr[i], 0, 30, array_degree)];
     }
 
-    std::cout << Task_Answer(array) <<'\n';
-    
+    for (size_t i = 0; i < arr_max_degree.size(); ++i) {
+        result += (arr_max_degree[i] * (arr_max_degree[i] - 1)) / 2;
+    }
+
+    return result;
 }
 
+int main() {
+    size_t number_of_inputs, ArraySize, degree_of_2 = 1;
+    std::vector<long long int> array;
+    std::cin >> number_of_inputs;
+    std::vector<long long int> array_degree = std::vector<long long int>(34);
+
+    for (size_t i = 0; i < array_degree.size(); ++i) {
+        array_degree[i] = degree_of_2;
+        degree_of_2 *= 2;
+    }
+
+    for (size_t i = 0; i < number_of_inputs; ++i) {
+        std::cin >> ArraySize;
+        array.resize(ArraySize);
+        for (size_t j = 0; j < ArraySize; ++j) {
+            std::cin >> array[j];
+        }
+
+        std::cout << Task_Answer2(array, array_degree) << '\n';
+    }
 
     return 0;
 }
