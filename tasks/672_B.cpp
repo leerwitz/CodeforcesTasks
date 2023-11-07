@@ -1,11 +1,11 @@
 #include <math.h>
+
 #include <iostream>
 #include <vector>
 
 long long int binary_find_degree(long long int value, long long int min_degree, long long int max_degree, std::vector<long long int> &array_degree);
 long long int bit_degree(long long int value);
 long long int Task_Answer2(std::vector<long long int> &arr, std::vector<long long int> &array_degree);
-
 
 long long int binary_find_degree(long long int value, long long int min_degree, long long int max_degree, std::vector<long long int> &array_degree) {
     if (value == 0) return -1;
