@@ -15,7 +15,7 @@ private:
     size_t valid_size; 
     double fill_factor;
     size_t GetKey(Key key){
-    return (size_t )((key) % this->size);
+    return static_cast<size_t>((key) % this->size);
     }
 
     void resize(){
@@ -38,7 +38,7 @@ private:
     }
 
     void Update_fill_factor(){
-        fill_factor = (double)(valid_size)/(double)(size);
+        fill_factor = static_cast<double>(valid_size)/static_cast<double>(size);
     }
 
 public:
