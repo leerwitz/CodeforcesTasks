@@ -2,8 +2,8 @@
 #include <unordered_map>
 #include "Hashtable.hpp"
 
-void CompareGet(std::unordered_map<int, double> StdHashTable, Hashtable<int, double> MyHashTable, size_t number_of_inputs);
-void CompareInput(std::unordered_map<int, double> &StdHashTable, Hashtable<int, double> &MyHashTable, size_t number_of_inputs);
+void CompareGet(std::unordered_map<int, double> stdHashTable, Hashtable<int, double> myHashTable, size_t numberOfInputs);
+void compareInput(std::unordered_map<int, double> &stdHashTable, Hashtable<int, double> &myHashTable, size_t numberOfInputs);
 
 
 template <typename Key, typename Value>
@@ -17,49 +17,49 @@ size_t Hashtable<Key, Value>::HashFunction(Key x) {
     return static_cast<size_t>(result);
 }
 
-void CompareInput(std::unordered_map<int, double> &StdHashTable, Hashtable<int, double> &MyHashTable, size_t number_of_inputs) {
-    unsigned int Mystart_time = std::clock();
-    for (size_t i = 0; i < number_of_inputs; ++i) {
-        MyHashTable.inputValue(i, static_cast<double>(rand() / RAND_MAX * number_of_inputs));
+void compareInput(std::unordered_map<int, double> &stdHashTable, Hashtable<int, double> &myHashTable, size_t numberOfInputs) {
+    unsigned int myStartTime = std::clock();
+    for (size_t i = 0; i < numberOfInputs; ++i) {
+        myHashTable.inputValue(i, static_cast<double>(rand() / RAND_MAX * numberOfInputs));
     }
-    unsigned int Myend_time = std::clock();
-    unsigned int MyTime = Myend_time - Mystart_time;
+    unsigned int myEndTime = std::clock();
+    unsigned int myTime = myEndTime - myStartTime;
 
-    unsigned int Stdstart_time = std::clock();
-    for (size_t i = 0; i < number_of_inputs; ++i) {
-        StdHashTable.insert({i, static_cast<double>(rand() / RAND_MAX * number_of_inputs)});
+    unsigned int stdStartTime = std::clock();
+    for (size_t i = 0; i < numberOfInputs; ++i) {
+        stdHashTable.insert({i, static_cast<double>(rand() / RAND_MAX * numberOfInputs)});
     }
-    unsigned int Stdend_time = std::clock();
-    unsigned int StdTime = Stdend_time - Stdstart_time;
-    std::cout << "My Hashtable input time for " << number_of_inputs << ": " << MyTime << '\n';
-    std::cout << "Std Hashtable input time for " << number_of_inputs << ": " << StdTime;
+    unsigned int stdEndTime = std::clock();
+    unsigned int stdTime = stdEndTime - stdStartTime;
+    std::cout << "My Hashtable input time for " << numberOfInputs << ": " << myTime << '\n';
+    std::cout << "Std Hashtable input time for " << numberOfInputs << ": " << stdTime;
 }
 
-void CompareGet(std::unordered_map<int, double> StdHashTable, Hashtable<int, double> MyHashTable, size_t number_of_inputs) {
-    std::clock_t Mystart_time = std::clock();
-    for (size_t i = 0; i < number_of_inputs; ++i) {
-        MyHashTable.GetValue(i);
+void CompareGet(std::unordered_map<int, double> stdHashTable, Hashtable<int, double> myHashTable, size_t numberOfInputs) {
+    std::clock_t myStartTime = std::clock();
+    for (size_t i = 0; i < numberOfInputs; ++i) {
+        myHashTable.GetValue(i);
     }
-    std::clock_t Myend_time = std::clock();
-    std::clock_t Mytime = Myend_time - Mystart_time;
+    std::clock_t myEndTime = std::clock();
+    std::clock_t mytime = myEndTime - myStartTime;
 
-    std::clock_t Stdstart_time = std::clock();
-    for (size_t i = 0; i < number_of_inputs; ++i) {
-        StdHashTable[i];
+    std::clock_t stdStartTime = std::clock();
+    for (size_t i = 0; i < numberOfInputs; ++i) {
+        stdHashTable[i];
     }
-    std::clock_t Stdend_time = std::clock();
-    std::clock_t Stdtime = Stdend_time - Stdstart_time;
+    std::clock_t stdEndTime = std::clock();
+    std::clock_t stdtime = stdEndTime - stdStartTime;
 
-    std::cout << "My Hashtable get time for " << number_of_inputs << ": " << Mytime << '\n';
-    std::cout << "Std Hashtable get time for " << number_of_inputs << ": " << Stdtime << '\n';
+    std::cout << "My Hashtable get time for " << numberOfInputs << ": " << mytime << '\n';
+    std::cout << "Std Hashtable get time for " << numberOfInputs << ": " << stdtime << '\n';
 }
 
 int main() {
-    Hashtable<int, double> MyHashTable = Hashtable<int, double>();
-    std::unordered_map<int, double> StdHashTable = std::unordered_map<int, double>();
-    CompareInput(StdHashTable, MyHashTable, 50000);
+    Hashtable<int, double> myHashTable = Hashtable<int, double>();
+    std::unordered_map<int, double> stdHashTable = std::unordered_map<int, double>();
+    compareInput(stdHashTable, myHashTable, 50000);
     std::cout << '\n';
-    CompareGet(StdHashTable, MyHashTable, 50000);
+    CompareGet(stdHashTable, myHashTable, 50000);
 
     return 0;
 }
