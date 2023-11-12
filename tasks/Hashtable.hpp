@@ -14,8 +14,8 @@ private:
     size_t size;
     size_t valid_size; 
     double fill_factor;
-    size_t GetKey(Key key){
-    return static_cast<size_t>((key) % this->size);
+    size_t getKey(Key key){
+    return static_cast<size_t>(hashFunction(key) % this->size);
     }
 
     void resize(){
@@ -37,7 +37,7 @@ private:
 
     }
 
-    void Update_fill_factor(){
+    void updateFillFactor(){
         fill_factor = static_cast<double>(valid_size)/static_cast<double>(size);
     }
 
@@ -55,13 +55,13 @@ public:
     ~Hashtable(){
     }    
 
-    size_t HashFunction(Key key);
+    size_t hashFunction(Key key);
     
     void inputValue(Key key, Value value){
     
-        if(!HaveValue(key, value)){
+        if(!haveValue(key, value)){
         auto element = std::pair<Key, Value>(key, value);
-        this->ArrayWithValue[GetKey(key)].push_back(element);
+        this->ArrayWithValue[getKey(key)].push_back(element);
         ++valid_size;
         }
     
@@ -69,16 +69,16 @@ public:
 
     void inputValue(std::pair<Key, Value> element){
         
-        if(!HaveValue(element)){
-        this->ArrayWithValue[GetKey(element.first)].push_back(element);
+        if(!haveValue(element)){
+        this->ArrayWithValue[getKey(element.first)].push_back(element);
         ++valid_size;
         }
     
     } 
 
-    bool HaveValue(Key key, Value value){
+    bool haveValue(Key key, Value value){
         
-        for (std::pair<Key,Value> i : this->ArrayWithValue[GetKey(key)])
+        for (std::pair<Key,Value> i : this->ArrayWithValue[getKey(key)])
         {
             if( i.first == key && i.second == value)
                 return true;
@@ -87,9 +87,9 @@ public:
         return false;        
     }
 
-        bool HaveValue(std::pair<Key, Value> element){
+        bool haveValue(std::pair<Key, Value> element){
         
-        for (std::pair<Key,Value> i : this->ArrayWithValue[GetKey(element.first)])
+        for (std::pair<Key,Value> i : this->ArrayWithValue[getKey(element.first)])
         {
             if( i == element)
                 return true;
@@ -98,9 +98,9 @@ public:
         return false;        
     }
 
-    Value GetValue(Key key){
+    Value getValue(Key key){
         Value result;
-        for (std::pair<Key,Value> i : this->ArrayWithValue[GetKey(key)])
+        for (std::pair<Key,Value> i : this->ArrayWithValue[getKey(key)])
         {
             if( i.first == key){
                 result = i.second;
