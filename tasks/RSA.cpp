@@ -35,7 +35,7 @@ class RSA {
         size_t result = static_cast<size_t>(pow(2, pow(2, max_degree))) + 1;
         long long coef_a, coef_b;
 
-        for (size_t i = max_degree; i >= 0; --i) {
+        for (size_t i = max_degree; i > 0; --i) {
             if (greatest_common_divisor(result, max, coef_a, coef_b) == 1) {
                 return result;
             }
@@ -71,7 +71,7 @@ class RSA {
 
     lnum message_encryption(std::string &message) {
         lnum number = get_lnum_from_string(message);
-        for (int i = 0; i < number.size(); ++i) {
+        for (int i = 0; i < static_cast<int>(number.size()); ++i) {
             number[i] = pow(static_cast<long long>(number[i]), this->public_key.first, this->public_key.second);
         }
         message = get_string_from_lnum(number);
@@ -81,7 +81,7 @@ class RSA {
 
     lnum message_encryption(std::string &message, std::pair<size_t, size_t> other_public_key) {
         lnum number = get_lnum_from_string(message);
-        for (int i = 0; i < number.size(); ++i) {
+        for (int i = 0; i < static_cast<int>(number.size()); ++i) {
             number[i] = pow(static_cast<long long>(number[i]), other_public_key.first, other_public_key.second);
         }
         message = get_string_from_lnum(number);
@@ -91,7 +91,7 @@ class RSA {
 
     std::string message_decryption(lnum &number) {
         std::string message;
-        for (int i = 0; i < number.size(); ++i) {
+        for (int i = 0; i < static_cast<int>(number.size()); ++i) {
             number[i] = pow(static_cast<long long>(number[i]), this->private_key.first, this->private_key.second);
         }
         message = get_string_from_lnum(number);

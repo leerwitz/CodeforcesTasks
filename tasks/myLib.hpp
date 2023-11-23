@@ -1,5 +1,12 @@
 #include <iostream>
 
+long long modular_multiplication(long long a, long long b, long long mod);
+long long pow(long long variable, long long power, long long mod);
+long long get_bit_degree(long long value);
+long long pow(long long variable, long long power);
+long long greatest_common_divisor(long long a, long long b, long long &coefficient_on_a, long long &coefficient_on_b);
+long long extended_Euclidean_algorithm(long long a, long long modulus_value);
+
 long long modular_multiplication(long long a, long long b, long long mod) { return a * b % mod; }
 
 long long pow(long long variable, long long power, long long mod) {
@@ -69,10 +76,3 @@ long long extended_Euclidean_algorithm(long long a, long long modulus_value) {
 
     return coefficient_on_a;
 }
-
-// long long reverse_element(long long element, long long module){
-//     long long coef_element = 0, coef_module = 0;
-//     long long g = greatest_common_divisor(element, module, coef_element, coef_module);
-//     coef_element = (coef_element % module + module) % module;
-//     return coef_element;
-// }

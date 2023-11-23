@@ -3,6 +3,18 @@
 
 typedef std::vector<long long> lnum;
 
+void print_long_number(lnum number);
+lnum get_vector_from_number_string(std::string str);
+std::string get_number_string_from_string(std::string str);
+size_t get_numerical_order(lnum number);
+lnum get_lnum_from_string(std::string &str);
+lnum long_add(lnum &a, lnum &b);
+lnum long_sub(lnum &a, lnum &b);
+lnum mult_long_short(lnum &lnumber, long long b);
+lnum mult_long(lnum a, lnum b);
+bool cmp_long(lnum a, lnum b);
+std::string get_string_from_lnum(lnum number);
+
 const long long base = 1000 * 1000 * 1000;
 
 void print_long_number(lnum number) {
@@ -86,7 +98,7 @@ lnum mult_long(lnum a, lnum b) {
 
     for (size_t i = 0; i < a.size(); ++i) {
         for (long long j = 0, carry = 0; j < static_cast<long long>(b.size()) || carry; ++j) {
-            long long cur = res[i + j] + a[i] * 1ll * (j < b.size() ? b[j] : 0);
+            long long cur = res[i + j] + a[i] * 1ll * (j < static_cast<long long>(b.size()) ? b[j] : 0);
             carry = static_cast<long long>(cur / base);
             res[i + j] = static_cast<long long>(cur % base);
         }
@@ -94,11 +106,6 @@ lnum mult_long(lnum a, lnum b) {
     while (res.size() > 1 && res.back() == 0) res.pop_back();
     return res;
 }
-
-// lnum div_long (lnum a, lnum b){
-//     lnum res( static_cast<size_t>(abs(a.size() - b.size())));
-//     for()
-// }
 
 bool cmp_long(lnum a, lnum b) {
     if (a.size() == b.size()) {
@@ -117,11 +124,11 @@ std::string get_string_from_lnum(lnum number) {
 
     for (int i = number.size() - 1; i >= 0; --i) {
         cur = std::to_string(number[i]);
-        for (long long j = 0; j < 9 - cur.size() && i != number.size() - 1 && cur.size() < 10; ++j) number_string += '0';
+        for (long long j = 0; j < 9 - static_cast<long long>(cur.size()) && i != static_cast<int>(number.size()) - 1 && cur.size() < 10; ++j) number_string += '0';
         number_string += cur;
     }
 
-    for (int i = 0; i < string_lenght; i += 3) {
+    for (int i = 0; i < static_cast<int>(string_lenght); i += 3) {
         if (i == 0) {
             res += static_cast<char>(atoi(number_string.substr(i, 3 - (3 - (string_lenght % 3)) % 3).c_str()));
             i -= (3 - (string_lenght % 3)) % 3;
